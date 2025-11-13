@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+env/
+*.egg-info/
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# Environment
+.env.local
+
+# Data
+data/raw/*
+data/processed/*
+*.csv
+*.json.gz
+
+# Logs
+logs/
+*.log
+
+# Docker
+docker-compose.override.yml
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Spark
+metastore_db/
+derby.log
+spark-warehouse/
+
+# Temporary
+*.tmp
+*.bak
+tmp/

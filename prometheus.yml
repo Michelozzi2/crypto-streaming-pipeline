@@ -1,0 +1,80 @@
+# Configuration Prometheus pour le monitoring du pipeline crypto
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Kafka JMX metrics (via Kafka broker)
+  - job_name: 'kafka'
+    static_configs:
+      - targets: ['kafka:9101']
+        labels:
+          service: 'kafka'
+          component: 'broker'
+
+  # PostgreSQL Exporter (à ajouter plus tard)
+  # - job_name: 'postgres'
+  #   static_configs:
+  #     - targets: ['postgres-exporter:9187']
+
+  # Clickhouse metrics (endpoint natif)
+  - job_name: 'clickhouse'
+    static_configs:
+      - targets: ['clickhouse:8123']
+        labels:
+          service: 'clickhouse'
+
+  # Redis Exporter (à ajouter plus tard)
+  # - job_name: 'redis'
+  #   static_configs:
+  #     - targets: ['redis-exporter:9121']
+
+  # Application metrics (Producer et Consumer Python)
+  # Ces endpoints seront exposés par nos apps Python
+  - job_name: 'crypto-producer'
+    static_configs:
+      - targets: ['host.docker.internal:8000']
+        labels:
+          service: 'producer'
+          component: 'kafka-producer'
+
+  - job_name: 'crypto-consumer'
+    static_configs:
+      - targets: ['host.docker.internal:8001']
+        labels:
+          service: 'consumer'
+          component: 'kafka-consumer'
+
+  - job_name: 'crypto-spark'
+    static_configs:
+      - targets: ['host.docker.internal:8002']
+        labels:
+          service: 'spark'
+          component: 'streaming'
+
+# Note: configuration de stockage/retention pour Prometheus doit être fournie
+# via les flags de démarrage du serveur (ou dans docker-compose) et non
+# directement dans ce fichier YAML. Une section `storage` non prise en
+# charge peut empêcher Prometheus de démarrer si la config ne correspond pas
+# à la version du serveur.
+#
+# Pour garder ce fichier simple et compatible, la section `storage` a été
+# retirée. Configurez le chemin et la durée de rétention dans votre
+# service Prometheus (docker-compose) comme dans l'exemple ci-dessous :
+#
+# Exemple (à ajouter dans le service `prometheus` de docker-compose.yml) :
+#   command:
+#     - --config.file=/etc/prometheus/prometheus.yml
+#     - --storage.tsdb.path=/prometheus
+#     - --storage.tsdb.retention.time=30d
+#   volumes:
+#     - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+#     - prometheus_data:/prometheus
+#   ports:
+#     - "9090:9090"
+
