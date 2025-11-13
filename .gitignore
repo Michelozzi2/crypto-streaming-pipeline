@@ -4,6 +4,7 @@ __pycache__/
 *.so
 .Python
 venv/
+.env/
 env/
 *.egg-info/
 
@@ -13,6 +14,7 @@ env/
 .DS_Store
 
 # Environment
+.env
 .env.local
 
 # Data
