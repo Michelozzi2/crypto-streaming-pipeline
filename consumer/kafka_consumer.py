@@ -22,10 +22,14 @@ logging.basicConfig(
     level=getattr(logging, config.LOG_LEVEL),
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.StreamHandler(),
-        logging.FileHandler('consumer.log')
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler('consumer.log', encoding='utf-8')
     ]
 )
+# Force UTF-8 pour stdout sur Windows
+if sys.stdout.encoding != 'utf-8':
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 logger = logging.getLogger(__name__)
 
 

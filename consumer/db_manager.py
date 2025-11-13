@@ -40,16 +40,21 @@ class DatabaseManager:
         try:
             logger.info(f"🔌 Connexion à PostgreSQL {self.host}:{self.port}/{self.database}...")
             
+            # Éviter les problèmes d'encodage Windows en forçant ASCII pour la DSN
+            import os
+            os.environ['PGCLIENTENCODING'] = 'UTF8'
+            
+            # Connexion simple avec paramètres séparés
             self.connection = psycopg2.connect(
-                host=self.host,
-                port=self.port,
-                database=self.database,
-                user=self.user,
-                password=self.password,
-                # Options de connexion
-                connect_timeout=10,
-                options='-c statement_timeout=30000'  # 30 secondes timeout
+                host=str(self.host),
+                port=int(self.port),
+                dbname=str(self.database),
+                user=str(self.user),
+                password=str(self.password)
             )
+            
+            # Force UTF-8
+            self.connection.set_client_encoding('UTF8')
             
             # Configurer l'autocommit à False (on commit manuellement)
             self.connection.autocommit = False
