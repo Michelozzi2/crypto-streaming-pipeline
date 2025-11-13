@@ -45,3 +45,9 @@ spark-warehouse/
 *.tmp
 *.bak
 tmp/
+
+# fichier md temporaire
+.CHECKILIST.md
+.COMMENCER_ICI.md
+.GUIDE_DEMARRAGE.md
+.RESSOURCES.md

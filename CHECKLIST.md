@@ -3,23 +3,24 @@
 ## Semaine 1 : Fondations (10h)
 
 ### Jour 1-2 : Setup Environnement (4h)
-- [ ] Télécharger et décompresser le projet
-- [ ] Installer Docker Desktop
-- [ ] Lancer `./start.sh` (Mac/Linux) ou `start.bat` (Windows)
-- [ ] Vérifier tous les services : `docker-compose ps`
-- [ ] Accéder à Kafka UI : http://localhost:8080
-- [ ] Accéder à Grafana : http://localhost:3000 (admin/admin)
-- [ ] Accéder à Prometheus : http://localhost:9090
-- [ ] Créer un environnement virtuel Python
-- [ ] Installer les dépendances : `pip install -r requirements.txt`
+- [x] Télécharger et décompresser le projet
+- [x] Installer Docker Desktop
+- [x] Lancer `./start.sh` (Mac/Linux) ou `start.bat` (Windows)
+- [x] Vérifier tous les services : `docker-compose ps`
+- [x] Accéder à Kafka UI : http://localhost:8080
+- [x] Accéder à Grafana : http://localhost:3000 (admin/admin)
+- [x] Accéder à Prometheus : http://localhost:9090
+- [x] Créer un environnement virtuel Python
+- [x] Installer les dépendances : `pip install -r requirements.txt`
 
 **✍️ Notes :**
 ```
-Date de début : ___________
+Date de début : 11/11/2025
 Problèmes rencontrés :
-
+Petit problème au lancement de Prometheus
 
 Solutions trouvées :
+La configuration de stockage/retention ne se met pas dans prometheus.yml. Utiliser les flags de démarrage (--storage.tsdb.path et --storage.tsdb.retention.time) dans docker-compose ou le command d’exécution du conteneur.
 
 
 ```
